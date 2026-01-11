@@ -1,0 +1,16 @@
+name: Build DLL
+on: push
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1
+      - name: Build Solution
+        run: msbuild GmodLuaInjector.sln /p:Configuration=Release /p:Platform=x64
+      - name: Upload DLL
+        uses: actions/upload-artifact@v2
+        with:
+          name: GmodDLL
+          path: x64/Release/GmodLuaInjector.dll
